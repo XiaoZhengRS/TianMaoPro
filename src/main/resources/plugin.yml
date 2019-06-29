@@ -1,0 +1,8 @@
+name: TianMaoPro
+version: ${project.version}
+main: com.xzkj.tianmaopro.Main
+depend: [NMSLibrary, Vault, PlaceholderAPI, PlayerPoints]
+authors: [XiaoZheng]
+description: QQ1419158026
+commands:
+  tm:

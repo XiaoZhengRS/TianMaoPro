@@ -1,0 +1,28 @@
+#配置中全部颜色务必使用§
+#配置全部区分大小写
+#配置中变量如下
+#<玩家名字>, <随机数0-100>. <物品名称>, <物品价格>, <店铺名称>, <店铺主人>, <店铺等级>, <店铺销量>, <店铺积分>
+
+
+#设置插件游戏内名称
+PluginGameName: §d[§5TianMaoPro§d]§7>>>§b
+#当玩家创建商店的时候回复
+NewShop:
+  #给自己看
+  me: 创建店铺<店铺名称>完成!
+  #发送给全服
+  Online: 恭喜玩家创建<店铺名称>大家快去看看吧!
+NewShopSale:
+  #给自己看
+  me: 上架物品<物品名称>完成!销售价格<物品价格>
+  #发送给全服
+  Online: <店铺名称>上架物品<物品名称>完成!销售价格<物品价格>大家快去看看吧!
+help:
+  - §e/§a§cTM §dopenTianMao §b打开全部天猫店铺
+  - §e/§a§cTM §dopen §e<§5玩家名§e> §b打开指定玩家的店铺
+  - §e/§a§cTM §dset ShopName §e<§5玩家名§e> §e<§5店铺名§e> §b设置指定玩家的店铺名称
+  - §e/§a§cTM §dset ShopIntegral §e<§5玩家名§e> §e<§5积分§e> §b设置指定玩家的店铺积分
+  - §e/§a§cTM §dnewShop §e<§5店铺名称§e> §b创建店铺
+  - §e/§a§cTM §dnewShopSale §e<§5价格§e> §b将手上的物品上架自己的商店
+  - §e/§a§cTM §ddeleteShop §b删除自己的商店,慎用会删除全部的库存!
+  - §e/§a§cTM §ddeleteShopSale §e<§5物品唯一标识§e> §b删除指定的库存!
