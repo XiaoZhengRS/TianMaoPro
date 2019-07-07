@@ -1,8 +1,9 @@
 package com.xzkj.tianmaopro.api;
 
 import com.xzkj.tianmaopro.data.CoreData;
-import com.xzkj.tianmaopro.utils.ItemStackBase64;
 import com.xzkj.tianmaopro.utils.Mes;
+import com.xzkj.tianmaopro.utils.NBT;
+import com.xzkj.tianmaopro.utils.NBTUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,8 +58,12 @@ public class Api {
             Mes.logPlayer(">>>当前手中没有任何物品!", p);
             return;
         }
-        ItemStack ShopSale = p.getItemInHand();
-        String ShopSaleStackBase64 = ItemStackBase64.getItemStacktoBase64((ItemStack) ItemStackBase64.getNMSItemTM(ShopSale));
+        //创建NBT
+        NBT dataNBT = new NBT(p.getItemInHand());
+
+        //获取可存储的NBTC
+        String dataStringCompound = NBTUtils.NBTtoBase54(dataNBT.compound);
+        org.bukkit.inventory.ItemStack ShopSale = p.getItemInHand();
         YamlConfiguration playerShopYml = YamlConfiguration.loadConfiguration(PlayerShopFile);
         int ShopShop = playerShopYml.getInt("商店商品数量");
         playerShopYml.set("商店商品数量", ShopShop + 1);
@@ -66,8 +71,9 @@ public class Api {
         Integer ShopShopItem = playerShopYml.getInt(ShopSale.getData().toString() + ".数量");
         playerShopYml.set("商品." + saleName + ".数量", ShopSale.getAmount() + ShopShopItem);
         playerShopYml.set("商品." + saleName + ".价格", price);
-        playerShopYml.set("商品." + saleName + ".唯一标识", price);
-        playerShopYml.set("商品." + saleName + ".Base64ItemStack", ShopSaleStackBase64);
+        playerShopYml.set("商品." + saleName + ".唯一标识", saleName);
+        playerShopYml.set("商品." + saleName + ".ItemStack", ShopSale);
+        playerShopYml.set("商品." + saleName + ".Base64ItemStack", dataStringCompound);
         try {
             playerShopYml.save(PlayerShopFile);
             p.getItemInHand().setAmount(0);

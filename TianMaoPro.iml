@@ -4,7 +4,7 @@
     <facet type="minecraft" name="Minecraft">
       <configuration>
         <autoDetectTypes>
-          <platformType>BUKKIT</platformType>
+          <platformType>SPIGOT</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
@@ -29,9 +29,11 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.guava:guava:21.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.yaml:snakeyaml:1.19" level="project" />
-    <orderEntry type="library" name="[小正插件前置]NMSLibrary" level="project" />
     <orderEntry type="library" name="[前置]Vault-1.7.10" level="project" />
     <orderEntry type="library" name="PlayerPoints-2.1.5-MCRMB-20180715" level="project" />
     <orderEntry type="library" name="[前置]PlaceholderAPI-2.10.2" level="project" />
+    <orderEntry type="library" name="spigot-1.12.2" level="project" />
+    <orderEntry type="library" name="[前置]XiaoZhengCore" level="project" />
+    <orderEntry type="library" name="ProtocolLib" level="project" />
   </component>
 </module>

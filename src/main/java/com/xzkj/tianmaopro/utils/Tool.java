@@ -2,12 +2,9 @@ package com.xzkj.tianmaopro.utils;
 
 import com.xzkj.tianmaopro.data.CoreData;
 import net.milkbowl.vault.economy.Economy;
-import nmslibrary.nmslibrary.util.FileUtils;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -25,17 +22,19 @@ public class Tool {
         if (file.exists()) {
             return;
         } else {
-            if(file == CoreData.Message){
+            if (file == CoreData.Message) {
                 try {
-                    FileUtils.copyFile(CoreData.ClassPath + "\\Message.yml", String.valueOf(CoreData.Message));
+                    File yl = new File(CoreData.ClassPath + "\\Message.yml");
+                    copyFileUsingFileStreams(yl, CoreData.Message);
                     Mes.logServer("创建Message完成>>>" + CoreData.Message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if(file == CoreData.Mysql){
+            if (file == CoreData.Mysql) {
                 try {
-                    FileUtils.copyFile(CoreData.ClassPath + "\\mysql.yml", String.valueOf(CoreData.Mysql));
+                    File yl = new File(CoreData.ClassPath + "\\mysql.yml");
+                    copyFileUsingFileStreams(yl, CoreData.Mysql);
                     Mes.logServer("创建Mysql完成>>>" + CoreData.Message);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -44,4 +43,24 @@ public class Tool {
         }
 
     }
+
+    private static void copyFileUsingFileStreams(File source, File dest)
+            throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
+        }
+    }
+
+
 }

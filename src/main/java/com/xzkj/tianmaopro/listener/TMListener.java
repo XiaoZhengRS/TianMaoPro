@@ -5,8 +5,9 @@ import com.xzkj.tianmaopro.api.Api;
 import com.xzkj.tianmaopro.api.ShopApi;
 import com.xzkj.tianmaopro.api.View;
 import com.xzkj.tianmaopro.data.CoreData;
-import com.xzkj.tianmaopro.utils.ItemStackBase64;
 import com.xzkj.tianmaopro.utils.Mes;
+import com.xzkj.tianmaopro.utils.NBT;
+import com.xzkj.tianmaopro.utils.NBTUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ import java.io.IOException;
 
 public class TMListener implements Listener {
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
+    public void onClick(InventoryClickEvent e) throws IOException {
         if (e.getRawSlot() == -999) {
             return;
         }
@@ -45,7 +46,21 @@ public class TMListener implements Listener {
             int CommodityPrice = Integer.parseInt(playerShopYml.getString("商品." + ShopItemName + ".价格"));
             int PriceTax = CommodityPrice * shopapi.getTianMaoShopTax(Bukkit.getPlayer(playerShop));
             if (CoreData.TMEcecon.bankHas(p.getName(), PriceTax).transactionSuccess()){
-                ItemStack dataStack = ItemStackBase64.getBukkitItemTM(ItemStackBase64.getBase64toItemStack(playerShopYml.getString("商品." + ShopItemName + ".Base64ItemStack")));
+                ItemStack dataStack = playerShopYml.getItemStack("商品." + ShopItemName + ".ItemStack");
+
+
+                //获取存储的C
+
+                String dataNMS = playerShopYml.getString("商品." + ShopItemName + ".Base64ItemStack");
+
+                //获取NBT
+
+                Object dataOBJNMS = NBTUtils.NBTtoObject(dataNMS);
+                NBT dataNBT =new NBT(dataStack);
+                dataNBT.compound = dataOBJNMS;
+                dataStack = dataNBT.toItemStack();
+
+
                 CoreData.TMEcecon.bankWithdraw(p.getName(), PriceTax);
                 CoreData.TMEcecon.depositPlayer(p, CommodityPrice);
                 p.getInventory().addItem(dataStack);

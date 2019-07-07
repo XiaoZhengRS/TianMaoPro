@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="[小正插件前置]NMSLibrary">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../NMSLibrary/out/artifacts/__NMSLibrary/[小正插件前置]NMSLibrary.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

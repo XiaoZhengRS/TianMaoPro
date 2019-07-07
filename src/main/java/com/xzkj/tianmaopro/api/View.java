@@ -2,8 +2,9 @@ package com.xzkj.tianmaopro.api;
 
 import com.xzkj.tianmaopro.HashMap.TMHashMap;
 import com.xzkj.tianmaopro.data.CoreData;
-import com.xzkj.tianmaopro.utils.ItemStackBase64;
 import com.xzkj.tianmaopro.utils.Mes;
+import com.xzkj.tianmaopro.utils.NBT;
+import com.xzkj.tianmaopro.utils.NBTUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +43,25 @@ public void openPlayerShop(Player MainPlayer, Player PlayerShop) {
     int Shopint = 0;
     for (int i = 0; i < ItemStackList.size(); i++) {
 
-        ItemStack dataStack = ItemStackBase64.getBukkitItemTM(ItemStackBase64.getBase64toItemStack(playerShopYml.getString("商品." + ItemStackList.get(i) + ".Base64ItemStack")));
+        ItemStack dataStack = playerShopYml.getItemStack("商品." + ItemStackList.get(i) + ".ItemStack");
+        ItemStack giveStack = dataStack;
+        //获取存储的C
+        String dataNMS = playerShopYml.getString("商品." + ItemStackList.get(i) + ".Base64ItemStack");
+        //获取NBT
+        try {
+            Object dataOBJNMS = NBTUtils.NBTtoObject(dataNMS);
+            NBT dataNBT =new NBT(dataStack);
+            dataNBT.compound = dataOBJNMS;
+            dataStack = dataNBT.toItemStack();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
         String price = playerShopYml.getString("商品." + ItemStackList.get(i) + ".价格");
         if (dataStack.getItemMeta().getLore() == null){
             List<String> ItemStackLore = new ArrayList<>();

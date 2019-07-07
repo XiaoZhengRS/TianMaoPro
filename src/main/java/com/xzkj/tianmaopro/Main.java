@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 public final class Main extends JavaPlugin {
@@ -69,13 +70,19 @@ public final class Main extends JavaPlugin {
         } else {
             Mes.logServer("§2(发现)NMSLibrary核心前置!" + "§3>>>§d[§9完成Hook§d]");
         }
-
+        try {
+            CoreData.ClassPath = java.net.URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
+            Mes.logServer("设置Class完成>>>" + CoreData.ClassPath);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         CoreData.Message = new File("./plugins/TianMaoPro", "\\Message.yml");
         CoreData.Mysql = new File("./plugins/TianMaoPro", "\\mysql.yml");
         Tool.TMFileExists(CoreData.Message);
         Mes.logServer("设置Message完成>>>" + CoreData.Message);
         Tool.TMFileExists(CoreData.Mysql);
         Mes.logServer("设置Mysql完成>>>" + CoreData.Mysql);
+
         CoreData.TM_Create = CoreData.Config.getInt("天猫配置.创建店铺所需手续费");
         CoreData.TM_Change_Name = CoreData.Config.getInt("天猫配置.更改店铺名称手续费");
         CoreData.TM_Shop_Name_NO = CoreData.Config.getStringList("天猫配置.店铺名称中不可使用的字符");
@@ -100,6 +107,8 @@ public final class Main extends JavaPlugin {
         Mes.logServer("绑定TM命令完成!");
         Bukkit.getPluginManager().registerEvents(new TMListener(), this);
         Mes.logServer("注册TM监听完成!");
+        YamlConfiguration v = YamlConfiguration.loadConfiguration(CoreData.Message);
+        CoreData.PluginGameName = v.getString("PluginGameName");
         Mes.logServer("|TianMaoPro|作者QQ:1419158026");
         Mes.logServer("======TianMaoPro======");
     }
